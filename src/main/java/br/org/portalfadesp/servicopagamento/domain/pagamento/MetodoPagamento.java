@@ -1,6 +1,6 @@
 package br.org.portalfadesp.servicopagamento.domain.pagamento;
 
-public enum MetoPagamento {
+public enum MetodoPagamento {
   BOLETO,
   PIX,
   CARTAO_CREDITO,
