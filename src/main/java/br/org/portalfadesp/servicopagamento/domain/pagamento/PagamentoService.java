@@ -1,5 +1,6 @@
 package br.org.portalfadesp.servicopagamento.domain.pagamento;
 
+import br.org.portalfadesp.servicopagamento.domain.pagamento.exception.PagamentoNotFoundException;
 import br.org.portalfadesp.servicopagamento.domain.pagamento.payload.request.PagamentoRequest;
 import br.org.portalfadesp.servicopagamento.domain.pagamento.payload.response.PagamentoResponse;
 import java.util.List;
@@ -10,20 +11,25 @@ public class PagamentoService {
 
   private final PagamentoRepository pagamentoRepository;
   private final PagamentoMapper pagamentoMapper;
+  private final PagamentoValidator pagamentoValidator;
 
   public PagamentoService(
     PagamentoRepository pagamentoRepository,
-    PagamentoMapper pagamentoMapper
+    PagamentoMapper pagamentoMapper,
+    PagamentoValidator pagamentoValidator
   ) {
     this.pagamentoRepository = pagamentoRepository;
     this.pagamentoMapper = pagamentoMapper;
+    this.pagamentoValidator = pagamentoValidator;
   }
 
   public PagamentoResponse receberPagamento(PagamentoRequest pagamentoRequest) {
-    validarPagamentoRequest(pagamentoRequest);
-    Pagamento pagamento = pagamentoMapper.mapToEntity(pagamentoRequest);
+    pagamentoValidator.validarPagamentoComCartao(pagamentoRequest);
+    Pagamento pagamento = pagamentoMapper.mapPagamentoRequestToEntity(
+      pagamentoRequest
+    );
     pagamento = pagamentoRepository.save(pagamento);
-    return pagamentoMapper.mapToResponse(pagamento);
+    return pagamentoMapper.mapPagamentoToResponse(pagamento);
   }
 
   public PagamentoResponse atualizarStatusPagamento(
@@ -31,10 +37,10 @@ public class PagamentoService {
     StatusPagamento novoStatus
   ) {
     Pagamento pagamento = buscarPagamentoPorId(pagamentoId);
-    validarAtualizacaoStatusPagamento(pagamento, novoStatus);
+    pagamentoValidator.validarAtualizacaoStatusPagamento(pagamento, novoStatus);
     pagamento.setStatusPagamento(novoStatus);
     pagamento = pagamentoRepository.save(pagamento);
-    return pagamentoMapper.mapToResponse(pagamento);
+    return pagamentoMapper.mapPagamentoToResponse(pagamento);
   }
 
   public List<PagamentoResponse> listarPagamentos() {
@@ -57,7 +63,7 @@ public class PagamentoService {
 
   public void deletarPagamento(Long pagamentoId) {
     Pagamento pagamento = buscarPagamentoPorId(pagamentoId);
-    validarPagamentoPendenteProcessamento(pagamento);
+    pagamentoValidator.validarPagamentoPendenteProcessamento(pagamento);
     pagamentoRepository.delete(pagamento);
   }
 
@@ -65,55 +71,5 @@ public class PagamentoService {
     return pagamentoRepository
       .findById(pagamentoId)
       .orElseThrow(PagamentoNotFoundException::new);
-  }
-
-  private void validarPagamentoPendenteProcessamento(Pagamento pagamento) {
-    if (
-      pagamento.getStatusPagamento() !=
-      StatusPagamento.PENDENTE_DE_PROCESSAMENTO
-    ) {
-      throw new PagamentoInvalidException(
-        "Não é possível excluir um pagamento que não está pendente de processamento"
-      );
-    }
-  }
-
-  private void validarPagamentoRequest(PagamentoRequest pagamentoRequest) {
-    MetodoPagamento metodoPagamento = pagamentoRequest.getMetodoPagamento();
-
-    if (
-      metodoPagamento == MetodoPagamento.CARTAO_CREDITO ||
-      metodoPagamento == MetodoPagamento.CARTAO_DEBITO
-    ) {
-      String numeroCartao = pagamentoRequest.getNumeroCartao();
-
-      if (numeroCartao == null || numeroCartao.isEmpty()) {
-        throw new PagamentoInvalidException(
-          "Número do cartão é obrigatório para pagamento com cartão."
-        );
-      }
-    }
-  }
-
-  private void validarAtualizacaoStatusPagamento(
-    Pagamento pagamento,
-    StatusPagamento novoStatus
-  ) {
-    StatusPagamento statusAtual = pagamento.getStatusPagamento();
-
-    if (statusAtual == StatusPagamento.PROCESSADO_COM_SUCESSO) {
-      throw new PagamentoInvalidException(
-        "Não é possível alterar o status de um pagamento processado com sucesso"
-      );
-    }
-
-    if (
-      statusAtual == StatusPagamento.PROCESSADO_COM_FALHA &&
-      novoStatus != StatusPagamento.PENDENTE_DE_PROCESSAMENTO
-    ) {
-      throw new PagamentoInvalidException(
-        "Não é possível alterar o status de um pagamento processado com falha"
-      );
-    }
   }
 }
