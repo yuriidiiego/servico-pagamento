@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PagamentoMapper {
 
-  public Pagamento mapToEntity(PagamentoRequest pagamentoRequest) {
+  public Pagamento mapPagamentoRequestToEntity(
+    PagamentoRequest pagamentoRequest
+  ) {
     return new Pagamento(
       pagamentoRequest.getCodigoDebito(),
       pagamentoRequest.getCpfCnpjPagador(),
@@ -19,7 +21,7 @@ public class PagamentoMapper {
     );
   }
 
-  public PagamentoResponse mapToResponse(Pagamento pagamento) {
+  public PagamentoResponse mapPagamentoToResponse(Pagamento pagamento) {
     PagamentoResponse pagamentoResponse = new PagamentoResponse();
     pagamentoResponse.setId(pagamento.getId());
     pagamentoResponse.setCodigoDebito(pagamento.getCodigoDebito());
@@ -34,7 +36,7 @@ public class PagamentoMapper {
   public List<PagamentoResponse> mapToResponseList(List<Pagamento> pagamentos) {
     return pagamentos
       .stream()
-      .map(this::mapToResponse)
+      .map(this::mapPagamentoToResponse)
       .collect(Collectors.toList());
   }
 }
