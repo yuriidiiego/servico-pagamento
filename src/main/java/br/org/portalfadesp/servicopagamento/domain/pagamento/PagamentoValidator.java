@@ -71,7 +71,7 @@ public class PagamentoValidator {
       novoStatus != StatusPagamento.PENDENTE_DE_PROCESSAMENTO
     ) {
       throw new PagamentoInvalidException(
-        "Não é possível alterar o status de um pagamento processado com falha."
+        "Não é possível alterar o status de um pagamento processado com falha para processado com sucesso."
       );
     }
   }
