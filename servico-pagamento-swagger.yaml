@@ -1,0 +1,279 @@
+openapi: 3.0.1
+info:
+  title: Servico de Pagamento API
+  description:
+    API para gerenciamento de pagamentos de debitos de pessoas físicas
+    e jurídicas.
+  contact:
+    name: Yuri Nascimento
+    url: https://github.com/yuriidiiego
+    email: yuriidiiego@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+  - url: http://localhost:8080
+    description: Servidor local de desenvolvimento
+tags:
+  - name: Pagamentos
+    description: API para operações de pagamentos
+paths:
+  /pagamentos:
+    get:
+      tags:
+        - Pagamentos
+      summary: Listar pagamentos com filtros opcionais
+      description: Endpoint para listar pagamentos
+      operationId: listarPagamentos
+      parameters:
+        - name: codigoDebito
+          in: query
+          description: Código do débito
+          required: false
+          schema:
+            type: integer
+            format: int32
+          example: 12345
+        - name: cpfCnpjPagador
+          in: query
+          description: CPF ou CNPJ do pagador
+          required: false
+          schema:
+            type: string
+          example: 12345678901
+        - name: statusPagamento
+          in: query
+          description: Status do pagamento
+          required: false
+          schema:
+            type: string
+            enum:
+              - PENDENTE_DE_PROCESSAMENTO
+              - PROCESSADO_COM_SUCESSO
+              - PROCESSADO_COM_FALHA
+      responses:
+        "409":
+          description: Conflict
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Not Found
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Lista de pagamentos
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/PagamentoResponse"
+    post:
+      tags:
+        - Pagamentos
+      summary: Criar um novo pagamento
+      description: Endpoint para receber o pagamento
+      operationId: receberPagamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PagamentoRequest"
+        required: true
+      responses:
+        "409":
+          description: Conflict
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Pagamento não encontrado
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "201":
+          description: Pagamento recebido com sucesso
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/PagamentoResponse"
+        "400":
+          description: Pagamento inválido
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /pagamentos/{pagamentoId}/status:
+    patch:
+      tags:
+        - Pagamentos
+      summary: Atualizar o status de um pagamento
+      description: Endpoint para atualizar o status de um pagamento
+      operationId: atualizarStatusPagamento
+      parameters:
+        - name: pagamentoId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 1
+        - name: novoStatus
+          in: query
+          description: Novo status do pagamento
+          required: true
+          schema:
+            type: string
+            enum:
+              - PENDENTE_DE_PROCESSAMENTO
+              - PROCESSADO_COM_SUCESSO
+              - PROCESSADO_COM_FALHA
+      responses:
+        "409":
+          description: Conflito no status de pagamento
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Pagamento não encontrado
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Pagamento atualizado com sucesso
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/PagamentoResponse"
+  /pagamentos/{pagamentoId}:
+    delete:
+      tags:
+        - Pagamentos
+      summary: Deletar um pagamento
+      description: Endpoint para deletar um pagamento
+      operationId: deletarPagamento
+      parameters:
+        - name: pagamentoId
+          in: path
+          description: Id do pagamento
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 1
+      responses:
+        "409":
+          description: Conflict
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Pagamento não encontrado
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "204":
+          description: Pagamento deletado com sucesso
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        mensagem:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        timestamp:
+          type: string
+          format: date-time
+        path:
+          type: string
+    PagamentoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID do pagamento
+          format: int64
+          example: 1
+        codigoDebito:
+          type: integer
+          description: Código do débito
+          format: int32
+          example: 12345
+        cpfCnpjPagador:
+          type: string
+          description: CPF/CNPJ do pagador
+          example: "12345678901"
+        metodoPagamento:
+          type: string
+          description: Método de pagamento
+          enum:
+            - BOLETO
+            - PIX
+            - CARTAO_CREDITO
+            - CARTAO_DEBITO
+        valorPagamento:
+          type: number
+          description: Valor do pagamento
+          example: 100.0
+        statusPagamento:
+          type: string
+          description: Status do pagamento
+          example: PROCESSADO_COM_SUCESSO
+          enum:
+            - PENDENTE_DE_PROCESSAMENTO
+            - PROCESSADO_COM_SUCESSO
+            - PROCESSADO_COM_FALHA
+        dataPagamento:
+          pattern: dd/MM/yyyy HH:mm:ss
+          type: string
+          description: Data do pagamento
+          format: date-time
+      description: Resposta de um pagamento
+    PagamentoRequest:
+      required:
+        - codigoDebito
+        - cpfCnpjPagador
+        - metodoPagamento
+        - valorPagamento
+      type: object
+      properties:
+        codigoDebito:
+          type: integer
+          description: Código do débito
+          format: int32
+          example: 12345
+        cpfCnpjPagador:
+          type: string
+          description: CPF/CNPJ do pagador
+          example: "12345678901"
+        metodoPagamento:
+          type: string
+          description: Método de pagamento
+          enum:
+            - BOLETO
+            - PIX
+            - CARTAO_CREDITO
+            - CARTAO_DEBITO
+        numeroCartao:
+          type: string
+          description: Número do cartão
+          example: "1234567890123456"
+        valorPagamento:
+          minimum: 0.0
+          exclusiveMinimum: true
+          type: number
+          description: Valor do pagamento
+          example: 100.0
+      description: Payload para criar um novo pagamento
