@@ -1,5 +1,6 @@
 package br.org.portalfadesp.servicopagamento.domain.pagamento;
 
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.StatusPagamento;
 import br.org.portalfadesp.servicopagamento.domain.pagamento.exception.PagamentoNotFoundException;
 import br.org.portalfadesp.servicopagamento.domain.pagamento.payload.request.PagamentoRequest;
 import br.org.portalfadesp.servicopagamento.domain.pagamento.payload.response.PagamentoResponse;

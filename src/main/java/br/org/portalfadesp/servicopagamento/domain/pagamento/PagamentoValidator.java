@@ -1,5 +1,7 @@
 package br.org.portalfadesp.servicopagamento.domain.pagamento;
 
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.MetodoPagamento;
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.StatusPagamento;
 import br.org.portalfadesp.servicopagamento.domain.pagamento.exception.PagamentoInvalidException;
 import br.org.portalfadesp.servicopagamento.domain.pagamento.payload.request.PagamentoRequest;
 import org.springframework.stereotype.Component;
@@ -44,7 +46,7 @@ public class PagamentoValidator {
     }
   }
 
-  private void validarNumeroCartao(String numeroCartao) {
+  void validarNumeroCartao(String numeroCartao) {
     if (numeroCartao == null || numeroCartao.isEmpty()) {
       throw new PagamentoInvalidException(
         "Número do cartão é obrigatório para pagamento com cartão."

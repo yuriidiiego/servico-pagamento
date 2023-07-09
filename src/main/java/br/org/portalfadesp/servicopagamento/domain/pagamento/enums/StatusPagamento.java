@@ -1,4 +1,4 @@
-package br.org.portalfadesp.servicopagamento.domain.pagamento;
+package br.org.portalfadesp.servicopagamento.domain.pagamento.enums;
 
 public enum StatusPagamento {
   PENDENTE_DE_PROCESSAMENTO,

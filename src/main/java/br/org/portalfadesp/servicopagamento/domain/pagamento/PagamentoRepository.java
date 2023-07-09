@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.StatusPagamento;
+
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
   @Query(
     "SELECT p FROM Pagamento p WHERE " +
