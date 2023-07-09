@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  db:
+    container_name: servico-pagamento-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: k29DlaweP65
+      POSTGRES_DB: servico-pagamento
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    container_name: servico-pagamento-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/servico-pagamento
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: k29DlaweP65
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./application-prod.properties:/app/application-prod.properties
+
+volumes:
+  db-data:
