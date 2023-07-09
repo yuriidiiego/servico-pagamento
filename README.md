@@ -1,6 +1,6 @@
 # Servico de Pagamento API 💳
 
-API para gerenciamento de pagamentos de débitos de pessoas físicas e jurídicas. A API permite:
+API para o gerenciamento de pagamentos de débitos de pessoas físicas e jurídicas, como parte do teste técnico da FADESP (Fundação Amparo e Desenvolvimento da Pesquisa). Essa API oferece uma série de recursos, permitindo que os usuários possam:
 
 1. Criar um novo pagamento.
 2. Atualizar o status de um pagamento.
@@ -35,13 +35,13 @@ A tabela abaixo lista todos os endpoints disponíveis na API, juntamente com sua
 Siga as etapas abaixo para executar o projeto em seu ambiente de desenvolvimento:
 
 1. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
-2. Clone o repositório do projeto.
+2. Clone o repositório do projeto com o comando `git clone https://github.com/yuriidiiego/servico-pagamento.git`.
 3. Acesse o diretório do projeto.
-4. Rode o comando mvn clean package -DskipTests para gerar o .jar do projeto.
+4. Rode o comando `mvn clean package -DskipTests no diretório do projeto para gerar o executável.
 5. Execute o comando `docker-compose up -d` para iniciar os containers do projeto.
 
 6. Após iniciar o projeto, você pode testar a API de denúncia de duas maneiras:
 
-    - **Swagger**: Acesse a [documentação da API](http://localhost:3000/servico-pagamento/swagger-ui/index.html) para visualizar todos os endpoints, métodos, autenticação e payloads disponíveis. O Swagger fornece uma interface interativa para testar e explorar a API.
+    - **Swagger**: Acesse a [documentação da API](http://localhost:8080/servico-pagamento/swagger-ui/index.html) para visualizar todos os endpoints, métodos, autenticação e payloads disponíveis. O Swagger fornece uma interface interativa para testar e explorar a API.
 
     - **Postman**: Importe o arquivo `servico-pagamento.postman_collection` que está localizado na pasta principal do projeto Spring Boot para o Postman. O arquivo contém uma coleção de requisições pré-configuradas para os endpoints da API. Você pode usar essas requisições para testar a API diretamente no Postman.
