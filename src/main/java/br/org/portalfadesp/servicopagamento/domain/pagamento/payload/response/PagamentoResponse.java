@@ -1,7 +1,7 @@
 package br.org.portalfadesp.servicopagamento.domain.pagamento.payload.response;
 
-import br.org.portalfadesp.servicopagamento.domain.pagamento.MetodoPagamento;
-import br.org.portalfadesp.servicopagamento.domain.pagamento.StatusPagamento;
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.MetodoPagamento;
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
@@ -25,10 +25,17 @@ public class PagamentoResponse {
   @Schema(description = "Valor do pagamento", example = "100.00")
   private BigDecimal valorPagamento;
 
-  @Schema(description = "Status do pagamento", example = "PROCESSADO_COM_SUCESSO")
+  @Schema(
+    description = "Status do pagamento",
+    example = "PROCESSADO_COM_SUCESSO"
+  )
   private StatusPagamento statusPagamento;
 
-  @Schema(description = "Data do pagamento", pattern = "dd/MM/yyyy HH:mm:ss", example = "01/01/2022 00:00:00")
+  @Schema(
+    description = "Data do pagamento",
+    pattern = "dd/MM/yyyy HH:mm:ss",
+    example = "01/01/2022 00:00:00"
+  )
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
   private LocalDateTime dataPagamento;
 
