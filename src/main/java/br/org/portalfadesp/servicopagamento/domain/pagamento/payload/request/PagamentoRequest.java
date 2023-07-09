@@ -1,11 +1,12 @@
 package br.org.portalfadesp.servicopagamento.domain.pagamento.payload.request;
 
-import br.org.portalfadesp.servicopagamento.domain.pagamento.MetodoPagamento;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.MetodoPagamento;
 
 @Schema(description = "Payload para criar um novo pagamento")
 public class PagamentoRequest {
