@@ -53,14 +53,14 @@ paths:
               - PROCESSADO_COM_SUCESSO
               - PROCESSADO_COM_FALHA
       responses:
-        "409":
-          description: Conflict
+        "404":
+          description: Not Found
           content:
             "*/*":
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-        "404":
-          description: Not Found
+        "409":
+          description: Conflict
           content:
             "*/*":
               schema:
@@ -84,14 +84,14 @@ paths:
               $ref: "#/components/schemas/PagamentoRequest"
         required: true
       responses:
-        "409":
-          description: Conflict
+        "404":
+          description: Pagamento não encontrado
           content:
             "*/*":
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-        "404":
-          description: Pagamento não encontrado
+        "409":
+          description: Conflict
           content:
             "*/*":
               schema:
@@ -134,14 +134,14 @@ paths:
               - PROCESSADO_COM_SUCESSO
               - PROCESSADO_COM_FALHA
       responses:
-        "409":
-          description: Conflito no status de pagamento
+        "404":
+          description: Pagamento não encontrado
           content:
             "*/*":
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-        "404":
-          description: Pagamento não encontrado
+        "409":
+          description: Conflito no status de pagamento
           content:
             "*/*":
               schema:
@@ -169,14 +169,14 @@ paths:
             format: int64
           example: 1
       responses:
-        "409":
-          description: Conflict
+        "404":
+          description: Pagamento não encontrado
           content:
             "*/*":
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-        "404":
-          description: Pagamento não encontrado
+        "409":
+          description: Conflict
           content:
             "*/*":
               schema:
