@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.MetodoPagamento;
+import br.org.portalfadesp.servicopagamento.domain.pagamento.enums.StatusPagamento;
+
 @Entity
 @Table(name = "pagamento")
 public class Pagamento {
