@@ -1,0 +1,104 @@
+{
+  "info": {
+    "_postman_id": "5fe306e9-c049-4f1f-85b1-dcb293261108",
+    "name": "pagamento-api",
+    "description": "# Servico de Pagamento API 💳\n\nAPI para gerenciamento de pagamentos de débitos de pessoas físicas e jurídicas. A API permite:\n\n1. Criar um novo pagamento.\n2. Atualizar o status de um pagamento.\n3. Listar pagamentos com filtros.\n4. Deletar um pagamento.\n    \n\n## Tecnologias Utilizadas 🛠️\n\n| Tecnologia | Descrição |\n| --- | --- |\n| ⚙️ Spring Boot | Framework Java para desenvolvimento de aplicativos web e API REST. |\n| 💾 Spring Data JPA | Biblioteca do Spring para integração com bancos de dados relacionais usando JPA. |\n| 🌐 Spring Web | Módulo do Spring para desenvolvimento de aplicativos web com suporte a API REST. |\n| 🏷️ Spring Validation | Biblioteca do Spring para validação de dados e manipulação de erros. |\n| 🗃️ H2 Database | Banco de dados em memória para desenvolvimento e teste. |\n| 📚 Springdoc OpenAPI | Biblioteca para geração de documentação da API com o OpenAPI (anteriormente Swagger). |\n| 🐘 PostgreSQL | Sistema de gerenciamento de banco de dados relacional. |\n\n## Endpoints da API 🚦\n\nA tabela abaixo lista todos os endpoints disponíveis na API, juntamente com suas descrições:\n\n| Endpoint | Método | Rota | Payload | Descrição |\n| --- | --- | --- | --- | --- |\n| Criar um novo pagamento | ✅ POST | `/pagamentos` | `{\"codigoDebito\": 12345, \"cpfCnpjPagador\": \"12345678901\", \"metodoPagamento\": {...}, \"valorPagamento\": 100.00}` | Cria um novo pagamento |\n| Atualizar o status de um pagamento | ⚡️ PATCH | `/pagamentos/{pagamentoId}/status` | `{\"novoStatus\": \"...\"}` | Atualiza o status de um pagamento pelo ID |\n| Listar pagamentos com filtros | 🔍 GET | `/pagamentos` | `{\"codigoDebito\": 12345 (opcional), \"cpfCnpjPagador\": \"12345678901\" (opcional), \"statusPagamento\": \"...\" (opcional)}` | Retorna uma lista de pagamentos com filtros (opcionais) |\n| Deletar um pagamento | ❌ DELETE | `/pagamentos/{pagamentoId}` | N/A | Deleta um pagamento pelo ID |\n\n## Executando o Projeto ▶️\n\nSiga as etapas abaixo para executar o projeto em seu ambiente de desenvolvimento:\n\n1. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.\n2. Clone o repositório do projeto.\n3. Acesse o diretório do projeto.\n4. Rode o comando mvn clean package -DskipTests para gerar o .jar do projeto.\n5. Execute o comando `docker-compose up -d` para iniciar os containers do projeto.\n6. Após iniciar o projeto, você pode testar a API de denúncia de duas maneiras:\n    - **Swagger**: Acesse a [documentação da API](http://localhost:3000/servico-pagamento/swagger-ui/index.html) para visualizar todos os endpoints, métodos, autenticação e payloads disponíveis. O Swagger fornece uma interface interativa para testar e explorar a API.\n    - **Postman**: Importe o arquivo `servico-pagamento.postman_collection` que está localizado na pasta principal do projeto Spring Boot para o Postman. O arquivo contém uma coleção de requisições pré-configuradas para os endpoints da API. Você pode usar essas requisições para testar a API diretamente no Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "17690371"
+  },
+  "item": [
+    {
+      "name": "Criar um pagamento.",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigoDebito\": \"1234\",\n  \"cpfCnpjPagador\": \"12345678900\",\n  \"metodoPagamento\": \"CARTAO_CREDITO\",\n  \"numeroCartao\": \"123568954221\",\n  \"valorPagamento\": 100.00\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{api-host}}/pagamentos",
+          "host": ["{{api-host}}"],
+          "path": ["pagamentos"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar o status de um pagamento.",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{api-host}}/pagamentos/1/status?novoStatus=PROCESSADO_COM_SUCESSO",
+          "host": ["{{api-host}}"],
+          "path": ["pagamentos", "1", "status"],
+          "query": [
+            {
+              "key": "novoStatus",
+              "value": "PROCESSADO_COM_SUCESSO"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar pagamentos com filtro opcional.",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{api-host}}/pagamentos",
+          "host": ["{{api-host}}"],
+          "path": ["pagamentos"],
+          "query": [
+            {
+              "key": "codigoDebito",
+              "value": "23627",
+              "disabled": true
+            },
+            {
+              "key": "cpfCnpjPagador",
+              "value": "70989098230",
+              "disabled": true
+            },
+            {
+              "key": "statusPagamento",
+              "value": "PENDENTE_DE_PROCESSAMENTO",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deleta um pagamento pelo ID.",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{api-host}}/pagamentos/1",
+          "host": ["{{api-host}}"],
+          "path": ["pagamentos", "1"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
