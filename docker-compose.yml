@@ -28,8 +28,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: k29DlaweP65
     ports:
       - "8080:8080"
-    volumes:
-      - ./application-prod.properties:/app/application-prod.properties
 
 volumes:
   db-data:
