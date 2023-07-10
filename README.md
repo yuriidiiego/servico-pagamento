@@ -15,7 +15,6 @@ API para o gerenciamento de pagamentos de débitos de pessoas físicas e jurídi
 | 💾 Spring Data JPA     | Biblioteca do Spring para integração com bancos de dados relacionais usando JPA.             |
 | 🌐 Spring Web          | Módulo do Spring para desenvolvimento de aplicativos web com suporte a API REST.             |
 | 🏷️ Spring Validation   | Biblioteca do Spring para validação de dados e manipulação de erros.                         |
-| 🗃️ H2 Database         | Banco de dados em memória para desenvolvimento e teste.                                      |
 | 📚 Springdoc OpenAPI   | Biblioteca para geração de documentação da API com o OpenAPI (anteriormente Swagger).        |
 | 🐘 PostgreSQL          | Sistema de gerenciamento de banco de dados relacional.                                        |
 
@@ -37,7 +36,7 @@ Siga as etapas abaixo para executar o projeto em seu ambiente de desenvolvimento
 1. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
 2. Clone o repositório do projeto com o comando `git clone https://github.com/yuriidiiego/servico-pagamento.git`.
 3. Acesse o diretório do projeto.
-4. Rode o comando `mvn clean package -DskipTests no diretório do projeto para gerar o executável.
+4. Rode o comando `mvn clean package -DskipTests` no diretório do projeto para gerar o executável.
 5. Execute o comando `docker-compose up -d` para iniciar os containers do projeto.
 
 6. Após iniciar o projeto, você pode testar a API de pagamentos de duas maneiras:
@@ -45,3 +44,18 @@ Siga as etapas abaixo para executar o projeto em seu ambiente de desenvolvimento
     - **Swagger**: Acesse a [documentação da API](http://localhost:8080/servico-pagamento/swagger-ui/index.html) para visualizar todos os endpoints, métodos, autenticação e payloads disponíveis. O Swagger fornece uma interface interativa para testar e explorar a API.
 
     - **Postman**: Importe o arquivo `servico-pagamento.postman_collection` que está localizado na pasta principal do projeto Spring Boot para o Postman. O arquivo contém uma coleção de requisições pré-configuradas para os endpoints da API. Você pode usar essas requisições para testar a API diretamente no Postman.
+
+## Acessando o Banco de Dados 💾
+
+Acesse o banco de dados utilizado pela API para visualizar e gerenciar os dados dos pagamentos.
+
+- **URL**: :link: `jdbc:postgresql://localhost:5432/servico-pagamento`
+- **Usuário**: :bust_in_silhouette: `postgres`
+- **Senha**: :key: `k29DlaweP65`
+- **Host**: :house: `localhost`
+- **Porta**: :door: `5432`
+- **Banco de dados**: :file_cabinet: `servico-pagamento`
+
+Use as credenciais acima para se conectar ao banco de dados PostgreSQL. Você pode utilizar ferramentas como pgAdmin, DBeaver ou o cliente de linha de comando `psql` para acessar e executar consultas no banco de dados.
+
+Certifique-se de ter o PostgreSQL instalado em sua máquina e configurado corretamente antes de acessar o banco de dados.
