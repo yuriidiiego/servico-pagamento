@@ -36,10 +36,9 @@ Siga as etapas abaixo para executar o projeto em seu ambiente de desenvolvimento
 1. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
 2. Clone o repositório do projeto com o comando `git clone https://github.com/yuriidiiego/servico-pagamento.git`.
 3. Acesse o diretório do projeto.
-4. Rode o comando `mvn clean package -DskipTests` no diretório do projeto para gerar o executável.
-5. Execute o comando `docker-compose up -d` para iniciar os containers do projeto.
+4. Execute o comando `docker-compose up -d` para iniciar os containers do projeto.
 
-6. Após iniciar o projeto, você pode testar a API de pagamentos de duas maneiras:
+5. Após iniciar o projeto, você pode testar a API de pagamentos de duas maneiras:
 
     - **Swagger**: Acesse a [documentação da API](http://localhost:8080/servico-pagamento/swagger-ui/index.html) para visualizar todos os endpoints, métodos, autenticação e payloads disponíveis. O Swagger fornece uma interface interativa para testar e explorar a API.
 
