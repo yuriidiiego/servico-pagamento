@@ -22,12 +22,12 @@ API para o gerenciamento de pagamentos de débitos de pessoas físicas e jurídi
 
 A tabela abaixo lista todos os endpoints disponíveis na API, juntamente com suas descrições:
 
-| Endpoint                           | Método | Rota                          | Payload                                          | Descrição                              |
-|------------------------------------|--------|-------------------------------|--------------------------------------------------|----------------------------------------|
-| Criar novo pagamento                | ✅ POST| `/pagamentos`                 | `{"codigoDebito": 12345, "cpfCnpj": "12345678901", "valor": 100.00}` | Cria um pagamento novo                  |
-| Atualizar status de pagamento      | ⚡️ PATCH| `/pagamentos/{pagamentoId}`   | `{"novoStatus": "..."}`                         | Atualiza status de pagamento por ID     |
-| Listar pagamentos com filtros       | 🔍 GET  | `/pagamentos`                 | `{"codigoDebito": 12345, "cpfCnpj": "12345678901", "status": "..."}` | Lista pagamentos com filtros opcionais  |
-| Deletar pagamento                  | ❌ DELETE| `/pagamentos/{pagamentoId}`   | N/A                                              | Deleta um pagamento por ID              |
+| Endpoint                                     | Método   | Rota                                    | Payload                                                | Param                                                     | Descrição                                                          |
+|----------------------------------------------|----------|-----------------------------------------|--------------------------------------------------------|-----------------------------------------------------------|--------------------------------------------------------------------|
+| 🔒 Criar um novo pagamento                    | ✉️ POST   | /pagamentos                             | PagamentoRequest (`{"codigoDebito": 12345, "cpfCnpj": "12345678901", "metodoPagamento": CARTAO_CREDITO, "numeroCartao?": 1234567890123456, "valor": 100.00}`)                                | -                                                         | Recebe um novo pagamento                                           |
+| 🔄 Atualizar o status de um pagamento         | 🔄 PATCH  | /pagamentos/{pagamentoId}/status         | -                                                      | pagamentoId (Long, required = true)<br>novoStatus (Enum)   | Atualiza o status de um pagamento                                   |
+| 🔍 Listar pagamentos                          | 🔎 GET    | /pagamentos                             | -                                                      | `{"codigoDebito": 12345, "cpfCnpj": "12345678901", "status": "..."}` (required = false)     | Lista pagamentos com filtros opcionais                              |
+| ❌ Deletar um pagamento                       | 🗑️ DELETE | /pagamentos/{pagamentoId}               | -                                                      | pagamentoId (Long, required = true)                        | Deleta um pagamento                                                 |
 
 ## Executando o Projeto ▶️
 
@@ -48,12 +48,12 @@ Siga as etapas abaixo para executar o projeto em seu ambiente de desenvolvimento
 
 Acesse o banco de dados utilizado pela API para visualizar e gerenciar os dados dos pagamentos.
 
-- **URL**: :link: `jdbc:postgresql://localhost:5432/servico-pagamento`
-- **Usuário**: :bust_in_silhouette: `postgres`
-- **Senha**: :key: `k29DlaweP65`
-- **Host**: :house: `localhost`
-- **Porta**: :door: `5432`
-- **Banco de dados**: :file_cabinet: `servico-pagamento`
+- :link: **URL**: `jdbc:postgresql://localhost:5432/servico-pagamento`
+- :bust_in_silhouette: **Usuário**: `postgres`
+- :key: **Senha**: `k29DlaweP65`
+- :house: **Host**: `localhost`
+- :door: **Porta**:  `5432`
+- :file_cabinet: **Banco de dados**: `servico-pagamento`
 
 Use as credenciais acima para se conectar ao banco de dados PostgreSQL. Você pode utilizar ferramentas como pgAdmin, DBeaver ou o cliente de linha de comando `psql` para acessar e executar consultas no banco de dados.
 
