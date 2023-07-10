@@ -25,7 +25,7 @@ public class PagamentoService {
   }
 
   public PagamentoResponse receberPagamento(PagamentoRequest pagamentoRequest) {
-    pagamentoValidator.validarPagamentoComCartao(pagamentoRequest);
+    pagamentoValidator.validarPagamento(pagamentoRequest);
     Pagamento pagamento = pagamentoMapper.mapPagamentoRequestToEntity(
       pagamentoRequest
     );
