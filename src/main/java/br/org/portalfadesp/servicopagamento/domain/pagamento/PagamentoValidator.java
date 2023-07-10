@@ -13,7 +13,7 @@ public class PagamentoValidator {
     validarStatusPagamentoPendenteProcessamento(pagamento.getStatusPagamento());
   }
 
-  public void validarPagamentoComCartao(PagamentoRequest pagamentoRequest) {
+  public void validarPagamento(PagamentoRequest pagamentoRequest) {
     MetodoPagamento metodoPagamento = pagamentoRequest.getMetodoPagamento();
     String numeroCartao = pagamentoRequest.getNumeroCartao();
 
@@ -22,6 +22,8 @@ public class PagamentoValidator {
       metodoPagamento == MetodoPagamento.CARTAO_DEBITO
     ) {
       validarNumeroCartao(numeroCartao);
+    } else {
+      pagamentoRequest.setNumeroCartao(null);
     }
   }
 
